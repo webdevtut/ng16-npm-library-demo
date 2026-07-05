@@ -21,7 +21,7 @@ export class HighlightPipe implements PipeTransform {
     if (searchKeyword) {
       const name = text[searchKeyword].replace(
         regex,
-        (match: any) => `<b>${match}</b>`
+        (match: string) => `<b>${match.toUpperCase()}</b>`
       );
       // copy original object
       const textCopied = { ...text };
