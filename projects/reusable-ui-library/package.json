@@ -5,7 +5,7 @@
   "author": "Tushar G Kadam",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tushar-idealake/library-demo"
+    "url": "https://github.com/webdevtut/ng16-npm-library-demo"
   },
   "scripts": {
     "build" : "tsc -p tsconfig.schematics.json",
