@@ -10,12 +10,11 @@
         <input
             #searchInput
             type="text"
-            class="autocomplete-input"
             [attr.aria-label]="placeholder"
             aria-autocomplete="list"
             role="combobox"
             [attr.aria-expanded]="isOpen"
-            placeholder="{{ placeholder }}"
+            [placeholder]="placeholder"
             [(ngModel)]="query"
             (input)="onChange($event)"
             (focus)="handleFocus($event)"
@@ -25,17 +24,18 @@
         />
 
         <!-- Clear -->
-        <button
-            *ngIf="query && !isLoading && !disabled"
-            type="button"
+        <div
             class="x"
+            *ngIf="query && !isLoading && !disabled"
+            role="button"
+            tabindex="0"
             aria-label="Clear search"
             (click)="remove($event)"
         >
             <i class="material-icons" aria-hidden="true"> close </i>
-        </button>
+        </div>
 
-        <!-- Loading -->
+        <!-- Loading mask -->
         <div *ngIf="isLoading" class="sk-fading-circle" role="status" aria-label="Loading">
             <div class="sk-circle1 sk-circle"></div>
             <div class="sk-circle2 sk-circle"></div>
@@ -60,7 +60,7 @@
         [class.is-hidden]="isHistoryListVisible"
         [class.is-visible]="!isHistoryListVisible"
     >
-        <!-- Heading -->
+        <!-- Filtered List Heading -->
         <div class="heading" *ngIf="filteredList.length > 0 && heading">
             <div class="text">{{ heading }}</div>
         </div>
@@ -109,13 +109,20 @@
         [class.is-hidden]="!isHistoryListVisible"
         [class.is-visible]="isHistoryListVisible"
     >
-        <!-- History Heading -->
+        <!-- History List Heading -->
         <div class="heading" *ngIf="historyList.length > 0 && historyHeading">
             <div class="text">{{ historyHeading }}</div>
 
-            <button type="button" class="x" aria-label="Clear search history" (click)="resetHistoryList($event)">
+            <!-- Clear History -->
+            <div
+                class="x"
+                role="button"
+                tabindex="0"
+                aria-label="Clear search history"
+                (click)="resetHistoryList($event)"
+            >
                 <i class="material-icons" aria-hidden="true"> delete </i>
-            </button>
+            </div>
         </div>
 
         <ul #historyListElement>
@@ -151,21 +158,22 @@
                     </ng-container>
                 </div>
 
-                <!-- Remove history item -->
-                <button
-                    type="button"
+                <!-- Remove History Item -->
+                <div
                     class="x"
+                    role="button"
+                    tabindex="0"
                     aria-label="Remove history item"
                     (click)="removeHistoryItem(idx, $event)"
                 >
                     <i class="material-icons" aria-hidden="true"> close </i>
-                </button>
+                </div>
             </li>
         </ul>
     </div>
 
     <!-- Not Found -->
-    <div *ngIf="notFound && !isLoading" class="not-found">
+    <div class="not-found" *ngIf="notFound && !isLoading">
         <ng-container
             *ngTemplateOutlet="
                 notFoundTemplate;
@@ -179,4 +187,4 @@
 </div>
 
 <!-- Overlay -->
-<div *ngIf="overlay" class="autocomplete-overlay" aria-hidden="true" (click)="handleOverlay()"></div>
+<div class="autocomplete-overlay" *ngIf="overlay" aria-hidden="true" (click)="handleOverlay()"></div>
